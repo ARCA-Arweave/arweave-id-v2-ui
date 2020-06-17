@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { IonContent, IonApp, IonHeader, IonTitle, IonToolbar, IonCard, IonButton, IonGrid, IonItem, IonInput } from '@ionic/react'
+import { IonContent, IonApp, IonHeader, IonTitle, IonToolbar, IonCard, IonButton, IonGrid, IonItem, IonInput, IonFooter } from '@ionic/react'
 import '@ionic/react/css/core.css'
 import * as CSS from 'csstype'
 import { ArweaveId } from 'arweave-id'
@@ -46,6 +46,7 @@ const App = () => {
           </IonGrid>
         </IonCard>
       </IonContent>
+      <IonFooter>footer with links and reference to arca</IonFooter>
     </IonApp>
   )
 }
