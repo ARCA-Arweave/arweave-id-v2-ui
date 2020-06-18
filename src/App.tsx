@@ -18,6 +18,8 @@ const App = () => {
   const [avatarDataUri , setAvatarDataUri ] = useState<string>()
 
   const onLoadIdentity = async (ev: React.ChangeEvent<HTMLInputElement>) => {
+    setName('')
+    setAvatarDataUri('')
     try{
       let data: IIdData = await loadIdentity(ev)
       let arid = data.arweaveId
@@ -67,7 +69,12 @@ const App = () => {
             <input id='myloadjson' type='file' onChange={onLoadIdentity} style={hiddenStyle}/>    
 
             <IonItem>
-              <IonInput placeholder='enter new name' value={name} onIonChange={ev=>setName(ev.detail.value!)}></IonInput>
+              <IonInput 
+                placeholder='enter new name' 
+                value={name} 
+                onIonChange={ev=>setName(ev.detail.value!)} 
+                style={{textAlign: 'center'}}
+              />
             </IonItem>
 
             <IonCard style={{...avatarStyle, backgroundImage: `url('${avatarDataUri}')`}}>
@@ -102,7 +109,6 @@ const gridStyle: CSS.Properties = {
   justifyContent: 'start',
   alignItems: 'center',
 }
-
 const avatarStyle: CSS.Properties = {
   position: 'relative',
 	width: '100%',
@@ -122,11 +128,10 @@ const editImageStyle: CSS.Properties = {
   backgroundColor: 'rgba(255, 255, 255, 0.5)',
   borderRadius: '5px', 
 }
-
 const labelStyle: CSS.Properties = {
   cursor: 'pointer',
+  padding: '10px',
 }
-
 const hiddenStyle: CSS.Properties = { 
   visibility: 'hidden',
   position: 'absolute',
