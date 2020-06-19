@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput } from '@ionic/react'
-import { InputChangeEventDetail} from '@ionic/core'
+import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput, IonSpinner, IonPopover } from '@ionic/react'
 import '@ionic/react/css/core.css'
 import * as CSS from 'csstype'
-import { loadIdentity, IIdData, setIdentity } from './providers/arweave.provider'
+import { loadIdentity, IIdData, setIdentity, isNameAvailable } from './providers/arweave.provider'
 import { mdiImageEdit, mdiSend } from '@mdi/js' //material icons: https://materialdesignicons.com/
 import { Icon } from '@mdi/react';
 import Header from './components/Header'
@@ -14,8 +13,10 @@ import { ArweaveId } from 'arweave-id'
 const App = () => {
   // const [arId, setArId] = useState<ArweaveId>({name: ''})
   const [address, setAddress] = useState('No wallet loaded')
-  const [name, setName] = useState<string>()
+  const [name, setName] = useState<string>('')
   const [avatarDataUri , setAvatarDataUri ] = useState<string>()
+  const [nameCheckLoading, setNameCheckLoading] = useState<boolean>(false)
+  const [showModal, setShowModal] = useState<boolean>(false)
 
   const onLoadIdentity = async (ev: React.ChangeEvent<HTMLInputElement>) => {
     setName('')
@@ -55,6 +56,22 @@ const App = () => {
     }
   }
 
+  const checkName = async () => {
+    console.log('checking name')
+    setNameCheckLoading(true);
+    let res = name !== undefined ? await isNameAvailable(name) : '';
+    setNameCheckLoading(false);
+    console.log(`Owner address is: ${res}`);
+    if (res !== address && res !== '') {
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+        setName('');
+      },2000);
+    }
+
+  }
+
   return (
     <IonApp>
       <Header/>
@@ -73,8 +90,18 @@ const App = () => {
                 placeholder='enter new name' 
                 value={name} 
                 onIonChange={ev=>setName(ev.detail.value!)} 
+                onBlur={checkName}
                 style={{textAlign: 'center'}}
-              />
+                disabled={nameCheckLoading}
+              >
+                {nameCheckLoading && <IonSpinner />}
+                <IonPopover
+                  isOpen={showModal}
+                  onDidDismiss={e => setShowModal(false)}
+                >
+                <p>Name not available</p>
+                </IonPopover>
+              </IonInput>
             </IonItem>
 
             <IonCard style={{...avatarStyle, backgroundImage: `url('${avatarDataUri}')`}}>
@@ -84,8 +111,8 @@ const App = () => {
               <input id='avatarinput' type='file' accept='image/*' onChange={onChangeAvatar} style={hiddenStyle} />    
             </IonCard>
             
-            <IonButton onClick={onUpdateIdentity}>
-              Update Profile &nbsp; <Icon path={mdiSend} size={1}/>
+            <IonButton onClick={onUpdateIdentity} disabled={name === ''}>
+              Update Profile &nbsp; <Icon path={mdiSend} size={1} />
             </IonButton>
 
           </IonGrid>
@@ -139,4 +166,9 @@ const hiddenStyle: CSS.Properties = {
   top: 0,
   width: '0px', 
   height: '0px',
+}
+
+const modalStyle: CSS.Properties = {
+  background: "#222",
+  alignContent: "center"  
 }

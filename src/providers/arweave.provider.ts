@@ -1,6 +1,8 @@
 import Arweave from 'arweave/web'
 import { retrieveArweaveIdfromAddress, ArweaveId, setArweaveData, getAddressfromArweaveID } from 'arweave-id'
 import { JWKInterface } from 'arweave/web/lib/wallet'
+import { resolve } from 'dns'
+import { rejects } from 'assert'
 
 const arweave = Arweave.init({})
 
@@ -11,45 +13,40 @@ export interface IIdData {
 	arweaveId?: ArweaveId
 }
 
-export const loadIdentity = async (ev: React.ChangeEvent<HTMLInputElement>):Promise<IIdData> => {
+export const loadIdentity = async (ev: React.ChangeEvent<HTMLInputElement>): Promise<IIdData> => {
 	return new Promise((resolve, reject) => {
 		let file = ev.target.files![0]
 		let fr = new FileReader()
 		fr.onload = async () => {
 			try {
-				jwk = JSON.parse( (fr.result as string) )
-		
+				jwk = JSON.parse((fr.result as string))
+
 				let address = await arweave.wallets.jwkToAddress(jwk)
 				let arweaveId = await retrieveArweaveIdfromAddress(address, arweave)
-	
-				resolve({address, arweaveId})
+
+				resolve({ address, arweaveId })
 			} catch (error) {
 				reject()
 			}
 		}
 		fr.onerror = reject
-		fr.readAsText( file )
+		fr.readAsText(file)
 	})
 }
 
 
 export const setIdentity = async (arId: ArweaveId) => {
-	if(!jwk){
+	if (!jwk) {
 		alert('need to load jwk first')
-		return 
+		return
 	}
 	console.log('Setting data:..')
 	console.log(arId)
-	let nameCheck = await getAddressfromArweaveID(arId.name, arweave);
-	if (nameCheck !== '') {
-		console.log(`Name is currently owned by ${nameCheck}`);
-		alert(`${arId.name} is not currently available`)
-		return;
-	}
-//	let res = await setArweaveData(arId, jwk, arweave)
-//	console.log(res)
+
+	let res = await setArweaveData(arId, jwk, arweave)
+	console.log(res)
 }
 
-export const checkName = async (name: string) => {
-	return 
+export const isNameAvailable = async (name: string): Promise<string> => {
+	return await getAddressfromArweaveID(name, arweave);
 }
