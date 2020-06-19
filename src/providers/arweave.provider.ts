@@ -1,8 +1,6 @@
 import Arweave from 'arweave/web'
 import { retrieveArweaveIdfromAddress, ArweaveId, setArweaveData, getAddressfromArweaveID } from 'arweave-id'
 import { JWKInterface } from 'arweave/web/lib/wallet'
-import { resolve } from 'dns'
-import { rejects } from 'assert'
 
 const arweave = Arweave.init({})
 
