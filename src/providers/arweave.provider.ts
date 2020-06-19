@@ -1,5 +1,5 @@
 import Arweave from 'arweave/web'
-import { retrieveArweaveIdfromAddress, ArweaveId, setArweaveData } from 'arweave-id'
+import { retrieveArweaveIdfromAddress, ArweaveId, setArweaveData, getAddressfromArweaveID } from 'arweave-id'
 import { JWKInterface } from 'arweave/web/lib/wallet'
 
 const arweave = Arweave.init({})
@@ -36,11 +36,20 @@ export const loadIdentity = async (ev: React.ChangeEvent<HTMLInputElement>):Prom
 export const setIdentity = async (arId: ArweaveId) => {
 	if(!jwk){
 		alert('need to load jwk first')
-		return
+		return 
 	}
 	console.log('Setting data:..')
 	console.log(arId)
-	let res = await setArweaveData(arId, jwk, arweave)
-	console.log(res)
+	let nameCheck = await getAddressfromArweaveID(arId.name, arweave);
+	if (nameCheck !== '') {
+		console.log(`Name is currently owned by ${nameCheck}`);
+		alert(`${arId.name} is not currently available`)
+		return;
+	}
+//	let res = await setArweaveData(arId, jwk, arweave)
+//	console.log(res)
 }
 
+export const checkName = async (name: string) => {
+	return 
+}
