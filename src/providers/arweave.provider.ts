@@ -1,5 +1,5 @@
 import Arweave from 'arweave/web'
-import { retrieveArweaveIdFromAddress, ArweaveId, setArweaveData, getAddressFromArweaveID } from 'arweave-id'
+import { retrieveArweaveIdFromAddress, ArweaveId, setArweaveData } from 'arweave-id'
 import { JWKInterface } from 'arweave/web/lib/wallet'
 
 
@@ -44,10 +44,6 @@ export const setIdentity = async (arId: ArweaveId) => {
 
 	let res = await setArweaveData(arId, jwk, arweave)
 	console.log(res)
-}
-
-export const isNameAvailable = async (name: string): Promise<string> => {
-	return await getAddressFromArweaveID(name, arweave);
 }
 
 export const getUnavailableNames = async (): Promise<Array<string>> => {

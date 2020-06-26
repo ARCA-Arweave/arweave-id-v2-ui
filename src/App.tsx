@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput, IonSpinner } from '@ionic/react'
+import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput } from '@ionic/react'
 import '@ionic/react/css/core.css'
 import * as CSS from 'csstype'
-import { loadIdentity, IIdData, setIdentity, isNameAvailable, getUnavailableNames } from './providers/arweave.provider'
+import { loadIdentity, IIdData, setIdentity, getUnavailableNames } from './providers/arweave.provider'
 import { mdiImageEdit, mdiSend } from '@mdi/js' //material icons: https://materialdesignicons.com/
 import { Icon } from '@mdi/react';
 import Header from './components/Header'
@@ -17,7 +17,6 @@ const App = () => {
 	const [address, setAddress] = useState('No wallet loaded')
 	const [name, setName] = useState<string>('')
 	const [avatarDataUri , setAvatarDataUri ] = useState<string>()
-	const [nameCheckLoading, setNameCheckLoading] = useState<boolean>(false)
 	const [showModal, setShowModal] = useState<boolean>(false)
 	const [unavailableNames, setUnavailableNames] = useState<string[]>()
 	useEffect(() => {
@@ -65,24 +64,9 @@ const App = () => {
 		setIdentity(updated)
 	}
 
-	const checkName = async () => {
-		console.log('checking name')
-		setNameCheckLoading(true);
-		let _name = name.trim()
-		setName(_name)
-		let res = _name !== '' ? await isNameAvailable(_name) : '';
-		setNameCheckLoading(false);
-		console.log(`Owner address is: ${res}`);
-		if (res !== address && res !== '') {
-			setShowModal(true);
-		}
-
-	}
-
-	const checkName2 = (ev: any) => {
+	const checkName = (ev: any) => {
 		setName(ev.detail.value!)
-		console.log(name);
-		if (unavailableNames?.includes(name)){
+		if (unavailableNames?.includes(ev.detail.value!)){
 			setShowModal(true)
 		}
 		else setShowModal(false);
@@ -110,13 +94,10 @@ const App = () => {
 								<IonInput 
 									placeholder='enter new name' 
 									value={name} 
-									onIonChange={ev=>checkName2(ev)} 
-									onBlur={checkName}
+									onIonChange={ev=>checkName(ev)} 
 									onFocus={()=>setShowModal(false)}
 									style={{textAlign: 'center'}}
-									disabled={nameCheckLoading}
 								>
-									{nameCheckLoading && <IonSpinner />}
 								</IonInput>
 							</Popover>
 						</IonItem>
