@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput, IonSpinner } from '@ionic/react'
 import '@ionic/react/css/core.css'
 import * as CSS from 'csstype'
-import { loadIdentity, IIdData, setIdentity, isNameAvailable } from './providers/arweave.provider'
+import { loadIdentity, IIdData, setIdentity, isNameAvailable, getUnavailableNames } from './providers/arweave.provider'
 import { mdiImageEdit, mdiSend } from '@mdi/js' //material icons: https://materialdesignicons.com/
 import { Icon } from '@mdi/react';
 import Header from './components/Header'
@@ -19,6 +19,15 @@ const App = () => {
 	const [avatarDataUri , setAvatarDataUri ] = useState<string>()
 	const [nameCheckLoading, setNameCheckLoading] = useState<boolean>(false)
 	const [showModal, setShowModal] = useState<boolean>(false)
+	const [unavailableNames, setUnavailableNames] = useState<string[]>()
+	useEffect(() => {
+		const getNames = async () => {
+			const names = await getUnavailableNames();
+			setUnavailableNames(names);
+			console.log(names);
+		}
+		getNames();
+	},[]) 
 
 	const onLoadIdentity = async (ev: React.ChangeEvent<HTMLInputElement>) => {
 		setName('')
@@ -70,6 +79,15 @@ const App = () => {
 
 	}
 
+	const checkName2 = (ev: any) => {
+		setName(ev.detail.value!)
+		console.log(name);
+		if (unavailableNames?.includes(name)){
+			setShowModal(true)
+		}
+		else setShowModal(false);
+	}
+
 	return (
 		<IonApp>
 			<Header/>
@@ -92,7 +110,7 @@ const App = () => {
 								<IonInput 
 									placeholder='enter new name' 
 									value={name} 
-									onIonChange={ev=>setName(ev.detail.value!)} 
+									onIonChange={ev=>checkName2(ev)} 
 									onBlur={checkName}
 									onFocus={()=>setShowModal(false)}
 									style={{textAlign: 'center'}}

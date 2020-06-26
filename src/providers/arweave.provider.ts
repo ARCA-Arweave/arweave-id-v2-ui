@@ -2,6 +2,7 @@ import Arweave from 'arweave/web'
 import { retrieveArweaveIdFromAddress, ArweaveId, setArweaveData, getAddressFromArweaveID } from 'arweave-id'
 import { JWKInterface } from 'arweave/web/lib/wallet'
 
+
 const arweave = Arweave.init({})
 
 let jwk: JWKInterface
@@ -47,4 +48,23 @@ export const setIdentity = async (arId: ArweaveId) => {
 
 export const isNameAvailable = async (name: string): Promise<string> => {
 	return await getAddressFromArweaveID(name, arweave);
+}
+
+export const getUnavailableNames = async (): Promise<Array<string>> => {
+	let query = `query {
+		transactions(tags: [{name: "App-Name", value: "arweave-id"},{name: "App-Version", value:"0.0.2"}]) {
+		  id
+		  tags{name value}
+		}
+	  }`
+	let allNamesQuery = Object.assign(await arweave.arql({query: query}));
+	let nameTxns = allNamesQuery.data.transactions as Array<object>;
+	//@ts-ignore
+	let names = nameTxns.map(txn => {
+		//@ts-ignore
+		let name = txn.tags.filter(tag => tag['name'] === 'Name');
+		return name[0]['value'];
+	})
+
+	return names;
 }
