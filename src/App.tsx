@@ -11,11 +11,13 @@ import { loadImage } from './providers/imageloader.provider'
 import { ArweaveId } from 'arweave-id'
 import Popover from 'react-tiny-popover'
 
+
 const App = () => {
-	// const [arId, setArId] = useState<ArweaveId>({name: ''})
+
 	const [disableUpdateButton, setDisableUpdateButton] = useState(true)
 	const [address, setAddress] = useState('No wallet loaded')
-	const [name, setName] = useState<string>('')
+	const [name, setName] = useState<string>('');
+	const [retrievedID, setID] = useState<ArweaveId>();
 	const [avatarDataUri , setAvatarDataUri ] = useState<string>()
 	const [showModal, setShowModal] = useState<boolean>(false)
 	const [unavailableNames, setUnavailableNames] = useState<string[]>()
@@ -39,6 +41,7 @@ const App = () => {
 			arid!.avatarDataUri !== undefined && setAvatarDataUri(arid?.avatarDataUri) 
 			console.log('received data')
 			console.log(data.arweaveId)
+			setID(arid);
 			setDisableUpdateButton(false)
 		}catch(err){
 			setDisableUpdateButton(true)
@@ -66,7 +69,7 @@ const App = () => {
 
 	const checkName = (ev: any) => {
 		setName(ev.detail.value!)
-		if (unavailableNames?.includes(ev.detail.value!)){
+		if ((retrievedID?.name !== ev.detail.value) && (unavailableNames?.includes(ev.detail.value!))){
 			setShowModal(true)
 			setDisableUpdateButton(true)
 		}
