@@ -68,8 +68,12 @@ const App = () => {
 		setName(ev.detail.value!)
 		if (unavailableNames?.includes(ev.detail.value!)){
 			setShowModal(true)
+			setDisableUpdateButton(true)
 		}
-		else setShowModal(false);
+		else {
+			setShowModal(false);
+			setDisableUpdateButton(false);
+		}
 	}
 
 	return (
