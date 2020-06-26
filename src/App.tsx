@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput, IonSpinner, IonPopover, IonToast, IonText } from '@ionic/react'
+import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput, IonSpinner } from '@ionic/react'
 import '@ionic/react/css/core.css'
 import * as CSS from 'csstype'
 import { loadIdentity, IIdData, setIdentity, isNameAvailable } from './providers/arweave.provider'
@@ -104,7 +104,10 @@ const App = () => {
 						</IonItem>
 
 						<IonCard style={{...avatarStyle, backgroundImage: `url('${avatarDataUri}')`}}>
-							<label htmlFor='avatarinput' style={editImageStyle} title='Load New Avatar Image'>
+							{!avatarDataUri && (
+								<span style={noImageTextStyle}>No avatar image found</span>
+							)}
+							<label htmlFor='avatarinput' style={editImageStyle} title='Edit Avatar Image'>
 								<Icon path={mdiImageEdit} size={2} color='black'/>
 							</label>
 							<input id='avatarinput' type='file' accept='image/*' onChange={onChangeAvatar} style={hiddenStyle} />    
@@ -145,6 +148,11 @@ const avatarStyle: CSS.Properties = {
 	backgroundPosition: 'center center',
 	backgroundRepeat: 'no-repeat',
 	backgroundSize: 'cover',
+	textAlign: 'center',
+}
+const noImageTextStyle: CSS.Properties = {
+	position: 'relative',
+	top: '45%',
 }
 const editImageStyle: CSS.Properties = {
 	position: 'absolute',
@@ -165,9 +173,4 @@ const hiddenStyle: CSS.Properties = {
 	top: 0,
 	width: '0px', 
 	height: '0px',
-}
-
-const modalStyle: CSS.Properties = {
-	background: "#222",
-	alignContent: "center"  
 }
