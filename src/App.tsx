@@ -8,7 +8,7 @@ import { Icon } from '@mdi/react';
 import Header from './components/Header'
 import Footer from './components/Footer'
 import { loadImage } from './providers/imageloader.provider'
-import { ArweaveId } from 'arweave-id'
+import { ArweaveId, getIdenticon } from 'arweave-id'
 import Popover from 'react-tiny-popover'
 
 
@@ -133,7 +133,13 @@ const App = () => {
 							</label>
 							<input id='avatarinput' type='file' accept='image/*' onChange={onChangeAvatar} style={hiddenStyle} />
 						</IonCard>
-
+						<IonItem>
+						<IonButton onClick={() =>{
+							let identicon = getIdenticon(name);
+							setAvatarDataUri(`${identicon}`)
+						}} disabled={name === ''}>
+							Generate Avatar &nbsp; 
+						</IonButton>	</IonItem>
 						<IonButton onClick={onUpdateIdentity} disabled={disableUpdateButton || name === ''}>
 							Update Profile &nbsp; <Icon path={mdiSend} size={1} />
 						</IonButton>
