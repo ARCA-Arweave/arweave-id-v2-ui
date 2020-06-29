@@ -1,5 +1,5 @@
 import Arweave from 'arweave/web'
-import { retrieveArweaveIdFromAddress, ArweaveId, setArweaveData } from 'arweave-id'
+import { get, ArweaveId, set } from 'arweave-id'
 import { JWKInterface } from 'arweave/web/lib/wallet'
 
 
@@ -21,7 +21,7 @@ export const loadIdentity = async (ev: React.ChangeEvent<HTMLInputElement>): Pro
 				jwk = JSON.parse((fr.result as string))
 
 				let address = await arweave.wallets.jwkToAddress(jwk)
-				let arweaveId = await retrieveArweaveIdFromAddress(address, arweave)
+				let arweaveId = await get(address, arweave)
 
 				resolve({ address, arweaveId })
 			} catch (error) {
@@ -42,7 +42,7 @@ export const setIdentity = async (arId: ArweaveId) => {
 	console.log('Setting data:..')
 	console.log(arId)
 
-	let res = await setArweaveData(arId, jwk, arweave)
+	let res = await set(arId, jwk, arweave)
 	console.log(res)
 }
 
