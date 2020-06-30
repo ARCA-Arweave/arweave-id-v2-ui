@@ -3,7 +3,7 @@ import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput, Ion
 import '@ionic/react/css/core.css'
 import * as CSS from 'csstype'
 import { loadIdentity, IIdData, setIdentity, getUnavailableNames } from './providers/arweave.provider'
-import { mdiSend } from '@mdi/js' //material icons: https://materialdesignicons.com/
+import { mdiWeb, mdiTagFaces, mdiFormatAlignRight } from '@mdi/js' //material icons: https://materialdesignicons.com/
 import { Icon } from '@mdi/react';
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -25,8 +25,8 @@ const App = () => {
 	const [unavailableNames, setUnavailableNames] = useState<string[]>()
 	const [successModal, setSuccess] = useState<boolean>(false);
 	const [postedTxn, setPostedTxn] = useState<string>('');
-	const walletFileInput = useRef<HTMLInputElement>(null) 
-	const avatarFileInput = useRef<HTMLInputElement>(null) 
+	const walletFileInput = useRef<HTMLInputElement>(null)
+	const avatarFileInput = useRef<HTMLInputElement>(null)
 
 	useEffect(() => {
 		const getNames = async () => {
@@ -44,7 +44,7 @@ const App = () => {
 		else {
 			setDisableUpdateButton(false)
 		}
-	}, [name, text, url, avatarDataUri, retrievedID,disableUpdateButton]);
+	}, [name, text, url, avatarDataUri, retrievedID, disableUpdateButton]);
 
 	const onLoadIdentity = async (ev: React.ChangeEvent<HTMLInputElement>) => {
 		setName('')
@@ -90,7 +90,7 @@ const App = () => {
 	}
 
 	const openFileInput = (fileInput: any) => {
-		if (fileInput.current){
+		if (fileInput.current) {
 			fileInput.current.click();
 		}
 	}
@@ -107,7 +107,7 @@ const App = () => {
 			setDisableUpdateButton(true)
 		}
 	}
-	
+
 	return (
 		<IonApp>
 			<Header />
@@ -115,26 +115,28 @@ const App = () => {
 
 				<IonCard style={mainCardStyle}>
 					<IonGrid style={gridStyle}>
-					{address && <IonCardContent>
-						<IonRow>
-						<IonItem >
-							<IonLabel>
-								{"Wallet: " + address}
-							</IonLabel>
-						</IonItem>
-						<IonButton color='secondary' onClick={() => openFileInput(walletFileInput)}>
-							<label style={labelStyle} title='Load Your Arweave Wallet'>
-								Load Wallet
+						{address && <IonCardContent>
+							<IonRow>
+								<IonItem lines="none">
+									<IonLabel>
+										{"Wallet: " + address}
+									</IonLabel>
+								</IonItem>
+								<IonButton shape="round" color='secondary' fill="outline" onClick={() => openFileInput(walletFileInput)}>
+									<label style={labelStyle} title='Load Your Arweave Wallet'>
+										import wallet
 							</label>
-							<input id='myloadjson' type='file' ref={walletFileInput} onChange={onLoadIdentity} style={hiddenStyle} />
-						</IonButton></IonRow>
-					</IonCardContent> }
-					<IonItem >
-						<IonButton shape="round" onClick={() =>{
-							let identicon = getIdenticon(name);
-							setAvatarDataUri(`${identicon}`)
-						}} disabled={name === ''}>
-							Generate Avatar &nbsp; 
+									<input id='myloadjson' type='file' ref={walletFileInput} onChange={onLoadIdentity} style={hiddenStyle} />
+								</IonButton></IonRow>
+						</IonCardContent>}
+						<IonItem lines="none">
+							<IonButton shape="round" size="default" onClick={() => {
+								let identicon = getIdenticon(name);
+								setAvatarDataUri(`${identicon}`)
+							}} disabled={name === ''}>
+								<label style={labelStyle} title='generate avatar'>
+										generate avatar
+							</label>
 						</IonButton>	</IonItem>
 						<IonCard onClick={() => openFileInput(avatarFileInput)} style={{ ...avatarStyle, backgroundImage: `url('${avatarDataUri}')` }}>
 							{!avatarDataUri && (
@@ -142,49 +144,52 @@ const App = () => {
 							)}
 							<input id='avatarinput' type='file' ref={avatarFileInput} accept='image/*' onChange={onChangeAvatar} style={hiddenStyle} />
 						</IonCard>
-							
+
 
 						<IonList>
-						<IonItem>
-							<Popover
-								isOpen={showModal}
-								position={'bottom'} // preferred position
-								content={<IonCard color='danger' style={{ padding: '10px' }}>Name Not Available</IonCard>}
-							>
-								<IonInput
-									placeholder='enter new name'	
-									value={name}
-									onIonChange={ev => checkName(ev)}
-									onFocus={() => setShowModal(false)}
-									style={{ textAlign: 'center' }}
-								/>
-							</Popover>
+							<IonItem lines="none" style={{border: '0px solid white'}}>		
+								<Icon path={mdiTagFaces} size={1} />
+								<Popover
+									isOpen={showModal}
+									position={'bottom'} // preferred position
+									content={<IonCard color='danger' style={{ padding: '10px' }}>Name Not Available</IonCard>}
+								>
+
+									<IonInput
+										placeholder="What's your name?"
+										value={name}
+										onIonChange={ev => checkName(ev)}
+										onFocus={() => setShowModal(false)}
+										style={textAreaStyle}
+									/>
+								</Popover>
 							</IonItem>
-							<IonItem>
-							<IonInput
-								placeholder='Enter URL'
-								value={url}
-								onIonChange={ev => setUrl(ev.detail.value!)}
-								style={{ textAlign: 'center' }}
-							/></IonItem>
-							<IonItem>
-							<IonTextarea
-								placeholder='Enter any freeform text'
-								value={text}
-								onIonChange={ev => setText(ev.detail.value!)}
-								style={textAreaStyle}
-							/></IonItem>
+							<IonItem lines="none"><Icon path={mdiWeb} size={1} />
+								<IonInput
+									placeholder="What's your web address?"
+									value={url}
+									onIonChange={ev => setUrl(ev.detail.value!)}
+									style={textAreaStyle}
+								/></IonItem>
+							<IonItem lines="none">
+								<Icon path={mdiFormatAlignRight} size={1} style={{marginTop:"5px"}} />
+								<IonTextarea
+									placeholder='Tell us about yourself'
+									value={text}
+									onIonChange={ev => setText(ev.detail.value!)}
+									style={textAreaStyle}
+								/></IonItem>
 						</IonList>
-						<IonRow>
-						<Popover
+						<IonRow style={{justifyContent:"end"}}>
+							<Popover
 								isOpen={successModal}
 								position={'right'} // preferred position
-								content={<IonCard color='primary' style={{ padding: '10px' }}>ArweaveID submitted successfully.  See transaction 
+								content={<IonCard color='primary' style={{ padding: '10px' }}>ArweaveID submitted successfully.  See transaction
 								<a href={"https://viewblock.io/arweave/tx/" + postedTxn} target="blank"> here</a></IonCard>}
 							>
-						<IonButton onClick={onUpdateIdentity} disabled={disableUpdateButton || name === ''}>
-							Save &nbsp; <Icon path={mdiSend} size={1} />
-						</IonButton></Popover>
+								<IonButton onClick={onUpdateIdentity} disabled={disableUpdateButton || name === ''} shape="round">
+									save
+								</IonButton></Popover>
 						</IonRow>
 					</IonGrid>
 				</IonCard>
@@ -252,14 +257,15 @@ const svgStyle: CSS.Properties = {
 
 const textAreaStyle: CSS.Properties = {
 	textAlign: "left",
+	marginLeft: "10px",
 	border: "1px solid black",
 }
 
 const svgCircle = () => {
-	return <svg style={{...editImageStyle, ...svgStyle}} viewBox="0 0 100 100">
-	<circle cx="50" cy="50" r="45" fill="none" strokeWidth="7.5"></circle>
-	<line x1="32.5" y1="50" x2="67.5" y2="50" strokeWidth="5"></line>
-	<line x1="50" y1="32.5" x2="50" y2="67.5" strokeWidth="5"></line>
-  </svg>
-  
+	return <svg style={{ ...editImageStyle, ...svgStyle }} viewBox="0 0 100 100">
+		<circle cx="50" cy="50" r="45" fill="none" strokeWidth="7.5"></circle>
+		<line x1="32.5" y1="50" x2="67.5" y2="50" strokeWidth="5"></line>
+		<line x1="50" y1="32.5" x2="50" y2="67.5" strokeWidth="5"></line>
+	</svg>
+
 }
