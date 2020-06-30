@@ -8,7 +8,7 @@ import { Icon } from '@mdi/react';
 import Header from './components/Header'
 import Footer from './components/Footer'
 import { loadImage } from './providers/imageloader.provider'
-import { ArweaveId, getIdenticon } from 'arweave-id'
+import { ArweaveId, getIdenticon, ISetReturn } from 'arweave-id'
 import Popover from 'react-tiny-popover'
 
 
@@ -23,6 +23,8 @@ const App = () => {
 	const [avatarDataUri, setAvatarDataUri] = useState<string>()
 	const [showModal, setShowModal] = useState<boolean>(false)
 	const [unavailableNames, setUnavailableNames] = useState<string[]>()
+	const [successModal, setSuccess] = useState<boolean>(false);
+	const [postedTxn, setPostedTxn] = useState<string>('');
 	const walletFileInput = useRef<HTMLInputElement>(null) 
 	const avatarFileInput = useRef<HTMLInputElement>(null) 
 
@@ -75,14 +77,6 @@ const App = () => {
 		}
 	}
 
-	const onUpdateIdentity = async () => {
-		let updated: ArweaveId = { name: name!, url: url, text: text }
-		if (avatarDataUri !== undefined) {
-			updated.avatarDataUri = avatarDataUri
-		}
-		setIdentity(updated)
-	}
-
 	const checkName = (ev: any) => {
 		setName(ev.detail.value!)
 		if ((retrievedID?.name !== ev.detail.value) && (unavailableNames?.includes(ev.detail.value!))) {
@@ -98,6 +92,19 @@ const App = () => {
 	const openFileInput = (fileInput: any) => {
 		if (fileInput.current){
 			fileInput.current.click();
+		}
+	}
+
+	const onUpdateIdentity = async () => {
+		let updated: ArweaveId = { name: name!, url: url, text: text }
+		if (avatarDataUri !== undefined) {
+			updated.avatarDataUri = avatarDataUri
+		}
+		let res = await setIdentity(updated);
+		if (res?.statusCode === 202) {
+			setSuccess(true)
+			setPostedTxn(res.txid)
+			setDisableUpdateButton(true)
 		}
 	}
 	
@@ -169,9 +176,15 @@ const App = () => {
 							/></IonItem>
 						</IonList>
 						<IonRow>
+						<Popover
+								isOpen={successModal}
+								position={'right'} // preferred position
+								content={<IonCard color='primary' style={{ padding: '10px' }}>ArweaveID submitted successfully.  See transaction 
+								<a href={"https://viewblock.io/arweave/tx/" + postedTxn} target="blank"> here</a></IonCard>}
+							>
 						<IonButton onClick={onUpdateIdentity} disabled={disableUpdateButton || name === ''}>
 							Save &nbsp; <Icon path={mdiSend} size={1} />
-						</IonButton>
+						</IonButton></Popover>
 						</IonRow>
 					</IonGrid>
 				</IonCard>
