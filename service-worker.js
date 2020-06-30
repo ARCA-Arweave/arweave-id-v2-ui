@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/arweave-id-v2-ui/precache-manifest.3ba89d8f555b6409385e2e8556fd5f2e.js"
+  "/arweave-id-v2-ui/precache-manifest.6f8412cb287f79b5050df5dda593e0d8.js"
 );
 
 self.addEventListener('message', (event) => {
