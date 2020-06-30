@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput, IonList, IonCardContent, IonLabel, IonRow, IonTextarea, IonText } from '@ionic/react'
+import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput, IonList, IonCardContent, IonLabel, IonRow, IonTextarea } from '@ionic/react'
 import '@ionic/react/css/core.css'
 import * as CSS from 'csstype'
 import { loadIdentity, IIdData, setIdentity, getUnavailableNames } from './providers/arweave.provider'
@@ -8,7 +8,7 @@ import { Icon } from '@mdi/react';
 import Header from './components/Header'
 import Footer from './components/Footer'
 import { loadImage } from './providers/imageloader.provider'
-import { ArweaveId, getIdenticon, ISetReturn } from 'arweave-id'
+import { ArweaveId, getIdenticon } from 'arweave-id'
 import Popover from 'react-tiny-popover'
 
 
