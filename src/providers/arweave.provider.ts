@@ -22,7 +22,7 @@ export const loadIdentity = async (ev: React.ChangeEvent<HTMLInputElement>): Pro
 
 				let address = await arweave.wallets.jwkToAddress(jwk)
 				let arweaveId = await get(address, arweave)
-
+				console.log(arweaveId);
 				resolve({ address, arweaveId })
 			} catch (error) {
 				reject()

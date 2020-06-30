@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput, IonList } from '@ionic/react'
+import React, { useState, useEffect, useRef } from 'react'
+import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput, IonList, IonCardContent, IonLabel, IonRow, IonTextarea, IonText } from '@ionic/react'
 import '@ionic/react/css/core.css'
 import * as CSS from 'csstype'
 import { loadIdentity, IIdData, setIdentity, getUnavailableNames } from './providers/arweave.provider'
-import { mdiImageEdit, mdiSend } from '@mdi/js' //material icons: https://materialdesignicons.com/
+import { mdiSend } from '@mdi/js' //material icons: https://materialdesignicons.com/
 import { Icon } from '@mdi/react';
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -15,7 +15,7 @@ import Popover from 'react-tiny-popover'
 const App = () => {
 
 	const [disableUpdateButton, setDisableUpdateButton] = useState(true)
-	const [address, setAddress] = useState('No wallet loaded')
+	const [address, setAddress] = useState('No address loaded')
 	const [name, setName] = useState<string>('');
 	const [url, setUrl] = useState<string>('');
 	const [text, setText] = useState<string>('');
@@ -23,6 +23,9 @@ const App = () => {
 	const [avatarDataUri, setAvatarDataUri] = useState<string>()
 	const [showModal, setShowModal] = useState<boolean>(false)
 	const [unavailableNames, setUnavailableNames] = useState<string[]>()
+	const walletFileInput = useRef<HTMLInputElement>(null) 
+	const avatarFileInput = useRef<HTMLInputElement>(null) 
+
 	useEffect(() => {
 		const getNames = async () => {
 			const names = await getUnavailableNames();
@@ -32,6 +35,15 @@ const App = () => {
 		getNames();
 	}, [])
 
+	useEffect(() => {
+		if ((retrievedID?.name === name) && (retrievedID?.text === text) && (retrievedID?.url === url) && (retrievedID?.avatarDataUri === avatarDataUri)) {
+			setDisableUpdateButton(true)
+		}
+		else {
+			setDisableUpdateButton(false)
+		}
+	}, [name, text, url, avatarDataUri, retrievedID,disableUpdateButton]);
+
 	const onLoadIdentity = async (ev: React.ChangeEvent<HTMLInputElement>) => {
 		setName('')
 		setAvatarDataUri('')
@@ -40,6 +52,8 @@ const App = () => {
 			let arid = data.arweaveId
 			setAddress(data.address!)
 			setName(arid!.name)
+			if (arid!.text) setText(arid!.text)
+			if (arid!.url) setUrl(arid!.url)
 			arid!.avatarDataUri !== undefined && setAvatarDataUri(arid?.avatarDataUri)
 			console.log('received data')
 			console.log(data.arweaveId)
@@ -81,18 +95,48 @@ const App = () => {
 		}
 	}
 
+	const openFileInput = (fileInput: any) => {
+		if (fileInput.current){
+			fileInput.current.click();
+		}
+	}
+	
 	return (
 		<IonApp>
 			<Header />
 			<IonContent >
+
 				<IonCard style={mainCardStyle}>
 					<IonGrid style={gridStyle}>
-						<IonButton color='secondary'>
-							<label htmlFor='myloadjson' style={labelStyle} title='Load Your Arweave Wallet'>
-								{address}
+					{address && <IonCardContent>
+						<IonRow>
+						<IonItem >
+							<IonLabel>
+								{"Wallet: " + address}
+							</IonLabel>
+						</IonItem>
+						<IonButton color='secondary' onClick={() => openFileInput(walletFileInput)}>
+							<label style={labelStyle} title='Load Your Arweave Wallet'>
+								Load Wallet
 							</label>
-						</IonButton>
-						<input id='myloadjson' type='file' onChange={onLoadIdentity} style={hiddenStyle} />
+							<input id='myloadjson' type='file' ref={walletFileInput} onChange={onLoadIdentity} style={hiddenStyle} />
+						</IonButton></IonRow>
+					</IonCardContent> }
+					<IonItem >
+						<IonButton shape="round" onClick={() =>{
+							let identicon = getIdenticon(name);
+							setAvatarDataUri(`${identicon}`)
+						}} disabled={name === ''}>
+							Generate Avatar &nbsp; 
+						</IonButton>	</IonItem>
+						<IonCard onClick={() => openFileInput(avatarFileInput)} style={{ ...avatarStyle, backgroundImage: `url('${avatarDataUri}')` }}>
+							{!avatarDataUri && (
+								svgCircle()
+							)}
+							<input id='avatarinput' type='file' ref={avatarFileInput} accept='image/*' onChange={onChangeAvatar} style={hiddenStyle} />
+						</IonCard>
+							
+
 						<IonList>
 						<IonItem>
 							<Popover
@@ -101,7 +145,7 @@ const App = () => {
 								content={<IonCard color='danger' style={{ padding: '10px' }}>Name Not Available</IonCard>}
 							>
 								<IonInput
-									placeholder='enter new name'
+									placeholder='enter new name'	
 									value={name}
 									onIonChange={ev => checkName(ev)}
 									onFocus={() => setShowModal(false)}
@@ -117,33 +161,18 @@ const App = () => {
 								style={{ textAlign: 'center' }}
 							/></IonItem>
 							<IonItem>
-							<IonInput
+							<IonTextarea
 								placeholder='Enter any freeform text'
 								value={text}
 								onIonChange={ev => setText(ev.detail.value!)}
-								style={{ textAlign: 'center' }}
+								style={textAreaStyle}
 							/></IonItem>
 						</IonList>
-						<IonCard style={{ ...avatarStyle, backgroundImage: `url('${avatarDataUri}')` }}>
-							{!avatarDataUri && (
-								<span style={noImageTextStyle}>No avatar image found</span>
-							)}
-							<label htmlFor='avatarinput' style={editImageStyle} title='Edit Avatar Image'>
-								<Icon path={mdiImageEdit} size={2} color='black' />
-							</label>
-							<input id='avatarinput' type='file' accept='image/*' onChange={onChangeAvatar} style={hiddenStyle} />
-						</IonCard>
-						<IonItem>
-						<IonButton onClick={() =>{
-							let identicon = getIdenticon(name);
-							setAvatarDataUri(`${identicon}`)
-						}} disabled={name === ''}>
-							Generate Avatar &nbsp; 
-						</IonButton>	</IonItem>
+						<IonRow>
 						<IonButton onClick={onUpdateIdentity} disabled={disableUpdateButton || name === ''}>
-							Update Profile &nbsp; <Icon path={mdiSend} size={1} />
+							Save &nbsp; <Icon path={mdiSend} size={1} />
 						</IonButton>
-
+						</IonRow>
 					</IonGrid>
 				</IonCard>
 			</IonContent>
@@ -176,19 +205,18 @@ const avatarStyle: CSS.Properties = {
 	backgroundRepeat: 'no-repeat',
 	backgroundSize: 'cover',
 	textAlign: 'center',
+	borderRadius: "50%"
 }
-const noImageTextStyle: CSS.Properties = {
-	position: 'relative',
-	top: '45%',
-}
+
 const editImageStyle: CSS.Properties = {
-	position: 'absolute',
+	position: 'relative',
 	bottom: '10%',
 	right: '10%',
 	cursor: 'pointer',
 	backgroundColor: 'rgba(255, 255, 255, 0.5)',
 	borderRadius: '5px',
 }
+
 const labelStyle: CSS.Properties = {
 	cursor: 'pointer',
 	padding: '10px',
@@ -200,4 +228,25 @@ const hiddenStyle: CSS.Properties = {
 	top: 0,
 	width: '0px',
 	height: '0px',
+}
+
+const svgStyle: CSS.Properties = {
+	height: "200px",
+	stroke: "black",
+	bottom: '-15%',
+	right: '0%'
+}
+
+const textAreaStyle: CSS.Properties = {
+	textAlign: "left",
+	border: "1px solid black",
+}
+
+const svgCircle = () => {
+	return <svg style={{...editImageStyle, ...svgStyle}} viewBox="0 0 100 100">
+	<circle cx="50" cy="50" r="45" fill="none" strokeWidth="7.5"></circle>
+	<line x1="32.5" y1="50" x2="67.5" y2="50" strokeWidth="5"></line>
+	<line x1="50" y1="32.5" x2="50" y2="67.5" strokeWidth="5"></line>
+  </svg>
+  
 }
