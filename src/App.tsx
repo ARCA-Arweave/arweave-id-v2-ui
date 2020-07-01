@@ -25,6 +25,7 @@ const App = () => {
 	const [unavailableNames, setUnavailableNames] = useState<string[]>()
 	const [successModal, setSuccess] = useState<boolean>(false);
 	const [successModalContent, setModalContent] = useState<any>()
+	const [copiedModal, setCopied] = useState<boolean>(false);
 	const walletFileInput = useRef<HTMLInputElement>(null)
 	const avatarFileInput = useRef<HTMLInputElement>(null)
 
@@ -121,12 +122,24 @@ const App = () => {
 			<IonContent >
 				<IonGrid style={gridStyle}>
 					<IonCardContent>
-						<IonRow>
-							<IonItem lines="none">
-								<IonLabel>
-									{"Wallet: " + address}
+						<IonRow style={{flexDirection:'row', justifyContent:'center'}}>
+						<Popover
+								isOpen={copiedModal}
+								position={'bottom'}
+								content={<IonCard color='primary' style={{ padding: '5px', borderRadius:'15px'}}>Copied</IonCard>}
+							>
+							<IonItem onClick={() => {
+								navigator.clipboard.writeText(address)
+								.then(()=>{
+									setCopied(true)
+									setTimeout(() => setCopied(false),1500)
+								})
+							}
+								}lines="none">
+								<IonLabel style={addressStyle}>
+									{address}
 								</IonLabel>
-							</IonItem>
+							</IonItem></Popover>
 							<IonButton shape="round" color='secondary' fill="outline" onClick={() => openFileInput(walletFileInput)} >
 								<label style={labelStyle} title='Load Your Arweave Wallet'>
 									import wallet
@@ -262,6 +275,12 @@ const textAreaStyle: CSS.Properties = {
 	marginLeft: "10px",
 	border: "1px solid black",
 	paddingLeft: "5px"
+}
+
+const addressStyle: CSS.Properties = {
+	overflow: "ellipsis",
+	maxWidth: "90vw",
+	cursor: "pointer"
 }
 
 const svgCircle = () => {

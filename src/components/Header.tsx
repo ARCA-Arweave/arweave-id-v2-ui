@@ -6,13 +6,9 @@ import { mdiAccount } from '@mdi/js'
 
 const Header = () => {
 	return (
-		<IonHeader>
-			<IonToolbar>
-				<div style={toolbarStyle}>
-					<Icon path={mdiAccount} size={1}/> 
-					<IonTitle> Edit Your Arweave Profile</IonTitle>
-					<IonText>ArweaveID Version 2 - Reboot</IonText>
-				</div>
+		<IonHeader >
+			<IonToolbar style={toolbarStyle}>
+				<IonTitle> ArweaveID V2</IonTitle>
 			</IonToolbar>
 		</IonHeader>
 	)
@@ -21,7 +17,6 @@ const Header = () => {
 export default Header
 
 const toolbarStyle: CSS.Properties = {
-  display: 'flex',
-  flexDirection: 'row',
-  margin: '20px',
+	display: 'flex',
+	textAlign: 'center'
 }
