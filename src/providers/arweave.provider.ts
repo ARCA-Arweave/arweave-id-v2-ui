@@ -4,7 +4,7 @@ import { JWKInterface } from 'arweave/web/lib/wallet'
 
 
 const arweave = Arweave.init({
-    host: 'perma.online',
+    host: 'arweave.net',
     port: 443,
     protocol: 'https',
 })

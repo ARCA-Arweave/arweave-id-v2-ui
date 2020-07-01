@@ -3,7 +3,7 @@ import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput, Ion
 import '@ionic/react/css/core.css'
 import * as CSS from 'csstype'
 import { loadIdentity, IIdData, setIdentity, getUnavailableNames } from './providers/arweave.provider'
-import { mdiWeb, mdiTagFaces, mdiFormatAlignRight } from '@mdi/js' //material icons: https://materialdesignicons.com/
+import { mdiWeb, mdiTagFaces, mdiFormatAlignRight } from '@mdi/js'
 import { Icon } from '@mdi/react';
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -115,29 +115,31 @@ const App = () => {
 
 				<IonCard style={mainCardStyle}>
 					<IonGrid style={gridStyle}>
-						{address && <IonCardContent>
+						<IonCardContent>
 							<IonRow>
 								<IonItem lines="none">
 									<IonLabel>
 										{"Wallet: " + address}
 									</IonLabel>
 								</IonItem>
-								<IonButton shape="round" color='secondary' fill="outline" onClick={() => openFileInput(walletFileInput)}>
+								<IonButton shape="round" color='secondary' fill="outline" onClick={() => openFileInput(walletFileInput)} >
 									<label style={labelStyle} title='Load Your Arweave Wallet'>
 										import wallet
 							</label>
 									<input id='myloadjson' type='file' ref={walletFileInput} onChange={onLoadIdentity} style={hiddenStyle} />
 								</IonButton></IonRow>
-						</IonCardContent>}
-						<IonItem lines="none">
+						</IonCardContent>
+						<IonItem lines="none" style={{flexShrink:0}}>
 							<IonButton shape="round" size="default" onClick={() => {
 								let identicon = getIdenticon(name);
 								setAvatarDataUri(`${identicon}`)
 							}} disabled={name === ''}>
 								<label style={labelStyle} title='generate avatar'>
-										generate avatar
+									generate avatar
 							</label>
-						</IonButton>	</IonItem>
+							</IonButton>
+						</IonItem>
+
 						<IonCard onClick={() => openFileInput(avatarFileInput)} style={{ ...avatarStyle, backgroundImage: `url('${avatarDataUri}')` }}>
 							{!avatarDataUri && (
 								svgCircle()
@@ -147,11 +149,11 @@ const App = () => {
 
 
 						<IonList>
-							<IonItem lines="none" style={{border: '0px solid white'}}>		
+							<IonItem lines="none" style={{ border: '0px solid white' }}>
 								<Icon path={mdiTagFaces} size={1} />
 								<Popover
 									isOpen={showModal}
-									position={'bottom'} // preferred position
+									position={'bottom'}
 									content={<IonCard color='danger' style={{ padding: '10px' }}>Name Not Available</IonCard>}
 								>
 
@@ -172,7 +174,7 @@ const App = () => {
 									style={textAreaStyle}
 								/></IonItem>
 							<IonItem lines="none">
-								<Icon path={mdiFormatAlignRight} size={1} style={{marginTop:"5px"}} />
+								<Icon path={mdiFormatAlignRight} size={1} style={{ marginTop: "5px" }} />
 								<IonTextarea
 									placeholder='Tell us about yourself'
 									value={text}
@@ -180,11 +182,11 @@ const App = () => {
 									style={textAreaStyle}
 								/></IonItem>
 						</IonList>
-						<IonRow style={{justifyContent:"end"}}>
+						<IonRow style={{ justifyContent: "end" }}>
 							<Popover
 								isOpen={successModal}
-								position={'right'} // preferred position
-								content={<IonCard color='primary' style={{ padding: '10px' }}>ArweaveID submitted successfully.  See transaction
+								position={'right'} 
+								content={<IonCard color='primary' style={{ padding: '10px', borderRadius:"15px", textAlign:"center" }}>ArweaveID submitted successfully. <br/> See transaction
 								<a href={"https://viewblock.io/arweave/tx/" + postedTxn} target="blank"> here</a></IonCard>}
 							>
 								<IonButton onClick={onUpdateIdentity} disabled={disableUpdateButton || name === ''} shape="round">
@@ -205,6 +207,7 @@ const mainCardStyle: CSS.Properties = {
 	height: '80%',
 	margin: '10%',
 }
+
 const gridStyle: CSS.Properties = {
 	height: '100%',
 	display: 'flex',
@@ -223,7 +226,8 @@ const avatarStyle: CSS.Properties = {
 	backgroundRepeat: 'no-repeat',
 	backgroundSize: 'cover',
 	textAlign: 'center',
-	borderRadius: "50%"
+	borderRadius: "50%",
+	flexShrink: 0
 }
 
 const editImageStyle: CSS.Properties = {
@@ -259,6 +263,7 @@ const textAreaStyle: CSS.Properties = {
 	textAlign: "left",
 	marginLeft: "10px",
 	border: "1px solid black",
+	paddingLeft: "5px"
 }
 
 const svgCircle = () => {
