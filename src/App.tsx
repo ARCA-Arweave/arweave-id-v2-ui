@@ -117,7 +117,7 @@ const App = () => {
 	}
 
 	return (
-		<IonApp>
+		<IonApp >
 			<Header />
 			<IonContent >
 				<IonGrid style={gridStyle}>
@@ -265,7 +265,7 @@ const hiddenStyle: CSS.Properties = {
 
 const svgStyle: CSS.Properties = {
 	height: "200px",
-	stroke: "black",
+	stroke: "#707070",
 	bottom: '-15%',
 	right: '0%'
 }
@@ -285,7 +285,7 @@ const addressStyle: CSS.Properties = {
 
 const svgCircle = () => {
 	return <svg style={{ ...editImageStyle, ...svgStyle }} viewBox="0 0 100 100">
-		<circle cx="50" cy="50" r="45" fill="none" strokeWidth="7.5"></circle>
+		<circle cx="50" cy="50" r="45" fill="none" strokeWidth="1"></circle>
 		<line x1="32.5" y1="50" x2="67.5" y2="50" strokeWidth="5"></line>
 		<line x1="50" y1="32.5" x2="50" y2="67.5" strokeWidth="5"></line>
 	</svg>

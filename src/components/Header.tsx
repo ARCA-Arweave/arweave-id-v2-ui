@@ -1,8 +1,6 @@
 import React from 'react'
-import { IonHeader, IonToolbar, IonTitle, IonText } from '@ionic/react'
+import { IonHeader, IonToolbar, IonTitle } from '@ionic/react'
 import * as CSS from 'csstype'
-import Icon from '@mdi/react'
-import { mdiAccount } from '@mdi/js'
 
 const Header = () => {
 	return (
