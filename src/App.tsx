@@ -98,8 +98,8 @@ const App = () => {
 	const onUpdateIdentity = async () => {
 		setDisableUpdateButton(true)
 		setSuccess(true)
-		setModalContent(<IonCard style={{ padding: '10px', borderRadius:"15px", textAlign:"center", width:"200px" }}>
-		<IonSpinner name="dots" /></IonCard>)
+		setModalContent(<IonCard style={{ padding: '10px', borderRadius: "15px", textAlign: "center", width: "200px" }}>
+			<IonSpinner name="dots" /></IonCard>)
 		let updated: ArweaveId = { name: name!, url: url, text: text }
 		if (avatarDataUri !== undefined) {
 			updated.avatarDataUri = avatarDataUri
@@ -107,100 +107,97 @@ const App = () => {
 		let res = await setIdentity(updated);
 
 		if (res?.statusCode === 202) {
-			setModalContent(<IonCard color="primary" style={{ padding: '10px', borderRadius:"15px", textAlign:"center", width:"200px" }}>
-			<label>ArweaveID submitted successfully. <br/> See transaction
+			setModalContent(<IonCard color="primary" style={{ padding: '10px', borderRadius: "15px", textAlign: "center", width: "200px" }}>
+				<label>ArweaveID submitted successfully. <br /> See transaction
 		<a href={"https://viewblock.io/arweave/tx/" + res.txid} target="blank"> here</a></label></IonCard>)
 		}
-		else setModalContent(<IonCard color="danger" style={{ padding: '10px', borderRadius:"15px", textAlign:"center", width:"200px" }}>
-		<label>Error: {res?.statusMessage}</label></IonCard>)
+		else setModalContent(<IonCard color="danger" style={{ padding: '10px', borderRadius: "15px", textAlign: "center", width: "200px" }}>
+			<label>Error: {res?.statusMessage}</label></IonCard>)
 	}
 
 	return (
 		<IonApp>
 			<Header />
 			<IonContent >
-
-
-					<IonGrid style={gridStyle}>
-						<IonCardContent>
-							<IonRow>
-								<IonItem lines="none">
-									<IonLabel>
-										{"Wallet: " + address}
-									</IonLabel>
-								</IonItem>
-								<IonButton shape="round" color='secondary' fill="outline" onClick={() => openFileInput(walletFileInput)} >
-									<label style={labelStyle} title='Load Your Arweave Wallet'>
-										import wallet
-							</label>
-									<input id='myloadjson' type='file' ref={walletFileInput} onChange={onLoadIdentity} style={hiddenStyle} />
-								</IonButton></IonRow>
-						</IonCardContent>
-						<IonItem lines="none" style={{flexShrink:0}}>
-							<IonButton shape="round" size="default" onClick={() => {
-								let identicon = getIdenticon(name);
-								setAvatarDataUri(`${identicon}`)
-							}} disabled={name === ''}>
-								<label style={labelStyle} title='generate avatar'>
-									generate avatar
-							</label>
-							</IonButton>
-						</IonItem>
-
-						<IonCard onClick={() => openFileInput(avatarFileInput)} style={{ ...avatarStyle, backgroundImage: `url('${avatarDataUri}')` }}>
-							{!avatarDataUri && (
-								svgCircle()
-							)}
-							<input id='avatarinput' type='file' ref={avatarFileInput} accept='image/*' onChange={onChangeAvatar} style={hiddenStyle} />
-						</IonCard>
-
-
-						<IonList>
-							<IonItem lines="none" style={{ border: '0px solid white' }}>
-								<Icon path={mdiTagFaces} size={1} />
-								<Popover
-									isOpen={showModal}
-									position={'bottom'}
-									content={<IonCard color='danger' style={{ padding: '10px' }}>Name Not Available</IonCard>}
-								>
-
-									<IonInput
-										placeholder="What's your name?"
-										value={name}
-										onIonChange={ev => checkName(ev)}
-										onFocus={() => setShowModal(false)}
-										style={textAreaStyle}
-									/>
-								</Popover>
-							</IonItem>
-							<IonItem lines="none"><Icon path={mdiWeb} size={1} />
-								<IonInput
-									placeholder="What's your web address?"
-									value={url}
-									onIonChange={ev => setUrl(ev.detail.value!)}
-									style={textAreaStyle}
-								/></IonItem>
+				<IonGrid style={gridStyle}>
+					<IonCardContent>
+						<IonRow>
 							<IonItem lines="none">
-								<Icon path={mdiFormatAlignRight} size={1} style={{ marginTop: "5px" }} />
-								<IonTextarea
-									placeholder='Tell us about yourself'
-									value={text}
-									onIonChange={ev => setText(ev.detail.value!)}
-									style={textAreaStyle}
-								/></IonItem>
-						</IonList>
-						<IonRow style={{ justifyContent: "end" }}>
-							<Popover
-								isOpen={successModal}
-								position={'bottom'} 
-								content={successModalContent}
-							>
-								<IonButton onClick={onUpdateIdentity} disabled={disableUpdateButton || name === ''} shape="round">
-									save
-								</IonButton></Popover>
-						</IonRow>
-					</IonGrid>
+								<IonLabel>
+									{"Wallet: " + address}
+								</IonLabel>
+							</IonItem>
+							<IonButton shape="round" color='secondary' fill="outline" onClick={() => openFileInput(walletFileInput)} >
+								<label style={labelStyle} title='Load Your Arweave Wallet'>
+									import wallet
+							</label>
+								<input id='myloadjson' type='file' ref={walletFileInput} onChange={onLoadIdentity} style={hiddenStyle} />
+							</IonButton></IonRow>
+					</IonCardContent>
+					<IonItem lines="none" style={{ flexShrink: 0 }}>
+						<IonButton shape="round" size="default" onClick={() => {
+							let identicon = getIdenticon(name);
+							setAvatarDataUri(`${identicon}`)
+						}} disabled={name === ''}>
+							<label style={labelStyle} title='generate avatar'>
+								generate avatar
+							</label>
+						</IonButton>
+					</IonItem>
 
+					<IonCard onClick={() => openFileInput(avatarFileInput)} style={{ ...avatarStyle, backgroundImage: `url('${avatarDataUri}')` }}>
+						{!avatarDataUri && (
+							svgCircle()
+						)}
+						<input id='avatarinput' type='file' ref={avatarFileInput} accept='image/*' onChange={onChangeAvatar} style={hiddenStyle} />
+					</IonCard>
+
+
+					<IonList>
+						<IonItem lines="none" style={{ border: '0px solid white' }}>
+							<Icon path={mdiTagFaces} size={1} />
+							<Popover
+								isOpen={showModal}
+								position={'bottom'}
+								content={<IonCard color='danger' style={{ padding: '10px' }}>Name Not Available</IonCard>}
+							>
+
+								<IonInput
+									placeholder="What's your name?"
+									value={name}
+									onIonChange={ev => checkName(ev)}
+									onFocus={() => setShowModal(false)}
+									style={textAreaStyle}
+								/>
+							</Popover>
+						</IonItem>
+						<IonItem lines="none"><Icon path={mdiWeb} size={1} />
+							<IonInput
+								placeholder="What's your web address?"
+								value={url}
+								onIonChange={ev => setUrl(ev.detail.value!)}
+								style={textAreaStyle}
+							/></IonItem>
+						<IonItem lines="none">
+							<Icon path={mdiFormatAlignRight} size={1} style={{ marginTop: "5px" }} />
+							<IonTextarea
+								placeholder='Tell us about yourself'
+								value={text}
+								onIonChange={ev => setText(ev.detail.value!)}
+								style={textAreaStyle}
+							/></IonItem>
+					</IonList>
+					<IonRow style={{ justifyContent: "end" }}>
+						<Popover
+							isOpen={successModal}
+							position={'bottom'}
+							content={successModalContent}
+						>
+							<IonButton onClick={onUpdateIdentity} disabled={disableUpdateButton || name === ''} shape="round">
+								save
+								</IonButton></Popover>
+					</IonRow>
+				</IonGrid>
 			</IonContent>
 			<Footer />
 		</IonApp>
