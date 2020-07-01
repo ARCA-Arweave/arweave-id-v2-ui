@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput, IonList, IonCardContent, IonLabel, IonRow, IonTextarea } from '@ionic/react'
+import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput, IonList, IonCardContent, IonLabel, IonRow, IonTextarea, IonSpinner } from '@ionic/react'
 import '@ionic/react/css/core.css'
 import * as CSS from 'csstype'
 import { loadIdentity, IIdData, setIdentity, getUnavailableNames } from './providers/arweave.provider'
@@ -25,6 +25,7 @@ const App = () => {
 	const [unavailableNames, setUnavailableNames] = useState<string[]>()
 	const [successModal, setSuccess] = useState<boolean>(false);
 	const [postedTxn, setPostedTxn] = useState<string>('');
+	const [successModalContent, setModalContent] = useState<any>()
 	const walletFileInput = useRef<HTMLInputElement>(null)
 	const avatarFileInput = useRef<HTMLInputElement>(null)
 
@@ -96,16 +97,23 @@ const App = () => {
 	}
 
 	const onUpdateIdentity = async () => {
+		setDisableUpdateButton(true)
+		setSuccess(true)
+		setModalContent(<IonCard style={{ padding: '10px', borderRadius:"15px", textAlign:"center", width:"200px" }}>
+		<IonSpinner name="dots" /></IonCard>)
 		let updated: ArweaveId = { name: name!, url: url, text: text }
 		if (avatarDataUri !== undefined) {
 			updated.avatarDataUri = avatarDataUri
 		}
 		let res = await setIdentity(updated);
+
 		if (res?.statusCode === 202) {
-			setSuccess(true)
-			setPostedTxn(res.txid)
-			setDisableUpdateButton(true)
+			setModalContent(<IonCard color="primary" style={{ padding: '10px', borderRadius:"15px", textAlign:"center", width:"200px" }}>
+			<label>ArweaveID submitted successfully. <br/> See transaction
+		<a href={"https://viewblock.io/arweave/tx/" + postedTxn} target="blank"> here</a></label></IonCard>)
 		}
+		else setModalContent(<IonCard color="danger" style={{ padding: '10px', borderRadius:"15px", textAlign:"center", width:"200px" }}>
+		<label>Error: {res?.statusMessage}</label></IonCard>)
 	}
 
 	return (
@@ -185,9 +193,8 @@ const App = () => {
 						<IonRow style={{ justifyContent: "end" }}>
 							<Popover
 								isOpen={successModal}
-								position={'right'} 
-								content={<IonCard color='primary' style={{ padding: '10px', borderRadius:"15px", textAlign:"center" }}>ArweaveID submitted successfully. <br/> See transaction
-								<a href={"https://viewblock.io/arweave/tx/" + postedTxn} target="blank"> here</a></IonCard>}
+								position={'bottom'} 
+								content={successModalContent}
 							>
 								<IonButton onClick={onUpdateIdentity} disabled={disableUpdateButton || name === ''} shape="round">
 									save
