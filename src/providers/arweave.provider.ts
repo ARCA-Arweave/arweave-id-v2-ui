@@ -3,7 +3,11 @@ import { get, ArweaveId, set } from 'arweave-id'
 import { JWKInterface } from 'arweave/web/lib/wallet'
 
 
-const arweave = Arweave.init({})
+const arweave = Arweave.init({
+    host: 'perma.online',
+    port: 443,
+    protocol: 'https',
+})
 
 let jwk: JWKInterface
 
