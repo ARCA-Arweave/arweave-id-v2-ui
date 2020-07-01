@@ -24,7 +24,6 @@ const App = () => {
 	const [showModal, setShowModal] = useState<boolean>(false)
 	const [unavailableNames, setUnavailableNames] = useState<string[]>()
 	const [successModal, setSuccess] = useState<boolean>(false);
-	const [postedTxn, setPostedTxn] = useState<string>('');
 	const [successModalContent, setModalContent] = useState<any>()
 	const walletFileInput = useRef<HTMLInputElement>(null)
 	const avatarFileInput = useRef<HTMLInputElement>(null)
@@ -110,7 +109,7 @@ const App = () => {
 		if (res?.statusCode === 202) {
 			setModalContent(<IonCard color="primary" style={{ padding: '10px', borderRadius:"15px", textAlign:"center", width:"200px" }}>
 			<label>ArweaveID submitted successfully. <br/> See transaction
-		<a href={"https://viewblock.io/arweave/tx/" + postedTxn} target="blank"> here</a></label></IonCard>)
+		<a href={"https://viewblock.io/arweave/tx/" + res.txid} target="blank"> here</a></label></IonCard>)
 		}
 		else setModalContent(<IonCard color="danger" style={{ padding: '10px', borderRadius:"15px", textAlign:"center", width:"200px" }}>
 		<label>Error: {res?.statusMessage}</label></IonCard>)
@@ -121,7 +120,7 @@ const App = () => {
 			<Header />
 			<IonContent >
 
-				<IonCard style={mainCardStyle}>
+
 					<IonGrid style={gridStyle}>
 						<IonCardContent>
 							<IonRow>
@@ -201,7 +200,7 @@ const App = () => {
 								</IonButton></Popover>
 						</IonRow>
 					</IonGrid>
-				</IonCard>
+
 			</IonContent>
 			<Footer />
 		</IonApp>
@@ -209,11 +208,6 @@ const App = () => {
 }
 export default App;
 
-
-const mainCardStyle: CSS.Properties = {
-	height: '80%',
-	margin: '10%',
-}
 
 const gridStyle: CSS.Properties = {
 	height: '100%',
