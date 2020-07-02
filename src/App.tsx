@@ -78,7 +78,7 @@ const App = () => {
 	}
 
 	const checkName = (ev: any) => {
-		setName(ev.detail.value!)
+		setName(ev.detail.value!.trim())
 		if ((retrievedID?.name !== ev.detail.value) && (unavailableNames?.includes(ev.detail.value!))) {
 			setShowModal(true)
 			setDisableUpdateButton(true)
