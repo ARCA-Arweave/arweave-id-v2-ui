@@ -14,9 +14,9 @@
     "static/js/5.ed5ae764.chunk.js.map": "/arweave-id-v2-ui/static/js/5.ed5ae764.chunk.js.map",
     "static/js/6.8ccd84cd.chunk.js": "/arweave-id-v2-ui/static/js/6.8ccd84cd.chunk.js",
     "static/js/6.8ccd84cd.chunk.js.map": "/arweave-id-v2-ui/static/js/6.8ccd84cd.chunk.js.map",
-    "main.css": "/arweave-id-v2-ui/static/css/main.5ecd60fb.chunk.css",
-    "main.js": "/arweave-id-v2-ui/static/js/main.ae53934d.chunk.js",
-    "main.js.map": "/arweave-id-v2-ui/static/js/main.ae53934d.chunk.js.map",
+    "main.css": "/arweave-id-v2-ui/static/css/main.12b0eddc.chunk.css",
+    "main.js": "/arweave-id-v2-ui/static/js/main.3aa3b125.chunk.js",
+    "main.js.map": "/arweave-id-v2-ui/static/js/main.3aa3b125.chunk.js.map",
     "polyfills-css-shim.js": "/arweave-id-v2-ui/static/js/polyfills-css-shim.b23bc348.chunk.js",
     "polyfills-css-shim.js.map": "/arweave-id-v2-ui/static/js/polyfills-css-shim.b23bc348.chunk.js.map",
     "runtime-main.js": "/arweave-id-v2-ui/static/js/runtime-main.e92aeb36.js",
@@ -189,10 +189,10 @@
     "static/js/92.9df26ce8.chunk.js": "/arweave-id-v2-ui/static/js/92.9df26ce8.chunk.js",
     "static/js/92.9df26ce8.chunk.js.map": "/arweave-id-v2-ui/static/js/92.9df26ce8.chunk.js.map",
     "index.html": "/arweave-id-v2-ui/index.html",
-    "precache-manifest.456cc5d569e610fa50c0edbeb9390f28.js": "/arweave-id-v2-ui/precache-manifest.456cc5d569e610fa50c0edbeb9390f28.js",
+    "precache-manifest.7aad05db9a12dc7da7609fcc5aef6b45.js": "/arweave-id-v2-ui/precache-manifest.7aad05db9a12dc7da7609fcc5aef6b45.js",
     "service-worker.js": "/arweave-id-v2-ui/service-worker.js",
     "static/css/10.bf8e508d.chunk.css.map": "/arweave-id-v2-ui/static/css/10.bf8e508d.chunk.css.map",
-    "static/css/main.5ecd60fb.chunk.css.map": "/arweave-id-v2-ui/static/css/main.5ecd60fb.chunk.css.map",
+    "static/css/main.12b0eddc.chunk.css.map": "/arweave-id-v2-ui/static/css/main.12b0eddc.chunk.css.map",
     "static/js/10.e58ed2b8.chunk.js.LICENSE.txt": "/arweave-id-v2-ui/static/js/10.e58ed2b8.chunk.js.LICENSE.txt",
     "static/js/28.0b952655.chunk.js.LICENSE.txt": "/arweave-id-v2-ui/static/js/28.0b952655.chunk.js.LICENSE.txt",
     "static/js/89.8d088d62.chunk.js.LICENSE.txt": "/arweave-id-v2-ui/static/js/89.8d088d62.chunk.js.LICENSE.txt",
@@ -202,7 +202,7 @@
     "static/js/runtime-main.e92aeb36.js",
     "static/css/10.bf8e508d.chunk.css",
     "static/js/10.e58ed2b8.chunk.js",
-    "static/css/main.5ecd60fb.chunk.css",
-    "static/js/main.ae53934d.chunk.js"
+    "static/css/main.12b0eddc.chunk.css",
+    "static/js/main.3aa3b125.chunk.js"
   ]
 }
