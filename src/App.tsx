@@ -10,8 +10,6 @@ import Footer from './components/Footer'
 import { loadImage } from './providers/imageloader.provider'
 import { ArweaveId, getIdenticon } from 'arweave-id'
 import Popover from 'react-tiny-popover'
-import { relative } from 'path'
-
 
 const App = () => {
 
