@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata&display=swap');
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inconsolata', monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -10,4 +10,11 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+:root {
+   --ion-font-family: 'Inconsolata';
+   --ion-color-primary: #383838;
+   --ion-color-secondary: #383838;
+   --ion-item-background:#F7F7F7;
 }

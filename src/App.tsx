@@ -11,11 +11,10 @@ import { loadImage } from './providers/imageloader.provider'
 import { ArweaveId, getIdenticon } from 'arweave-id'
 import Popover from 'react-tiny-popover'
 
-
 const App = () => {
 
 	const [disableUpdateButton, setDisableUpdateButton] = useState(true)
-	const [address, setAddress] = useState('No address loaded')
+	const [address, setAddress] = useState('xxxxxxxxxxx')
 	const [name, setName] = useState<string>('');
 	const [url, setUrl] = useState<string>('');
 	const [text, setText] = useState<string>('');
@@ -121,8 +120,8 @@ const App = () => {
 			<Header />
 			<IonContent >
 				<IonGrid style={gridStyle}>
-					<IonCardContent>
-						<IonRow style={{flexDirection:'row', justifyContent:'center'}}>
+					<IonCardContent style={{padding: '4px'}}>
+						<IonRow style={{flexDirection:'row'}}>
 						<Popover
 								isOpen={copiedModal}
 								position={'bottom'}
@@ -137,12 +136,12 @@ const App = () => {
 							}
 								}lines="none">
 								<IonLabel style={addressStyle}>
-									{address}
+									Wallet: {address.substr(0,4) + '...' + address.substr( (address.length-4))}
 								</IonLabel>
 							</IonItem></Popover>
-							<IonButton shape="round" color='secondary' fill="outline" onClick={() => openFileInput(walletFileInput)} >
+							<IonButton size='small' shape="round" color='secondary' fill="outline" onClick={() => openFileInput(walletFileInput)} style={{marginTop: '12px'}}>
 								<label style={labelStyle} title='Load Your Arweave Wallet'>
-									import wallet
+									import
 							</label>
 								<input id='myloadjson' type='file' ref={walletFileInput} onChange={onLoadIdentity} style={hiddenStyle} />
 							</IonButton></IonRow>
@@ -166,7 +165,7 @@ const App = () => {
 					</IonCard>
 
 
-					<IonList>
+					<IonList style={inputListStyles}>
 						<IonItem lines="none" style={{ border: '0px solid white' }}>
 							<Icon path={mdiTagFaces} size={1} />
 							<Popover
@@ -192,7 +191,7 @@ const App = () => {
 								style={textAreaStyle}
 							/></IonItem>
 						<IonItem lines="none">
-							<Icon path={mdiFormatAlignRight} size={1} style={{ marginTop: "5px" }} />
+							<Icon path={mdiFormatAlignRight} size={1} style={{ marginTop: "10px" }} />
 							<IonTextarea
 								placeholder='Tell us about yourself'
 								value={text}
@@ -206,7 +205,7 @@ const App = () => {
 							position={'bottom'}
 							content={successModalContent}
 						>
-							<IonButton onClick={onUpdateIdentity} disabled={disableUpdateButton || name === ''} shape="round">
+							<IonButton onClick={onUpdateIdentity} disabled={disableUpdateButton || name === ''} shape="round" style={saveButtonStyle} >
 								save
 								</IonButton></Popover>
 					</IonRow>
@@ -224,10 +223,10 @@ const gridStyle: CSS.Properties = {
 	display: 'flex',
 	flexDirection: 'column',
 	justifyContent: 'start',
-	alignItems: 'center',
+   alignItems: 'center',
+   backgroundColor: '#F7F7F7'
 }
 const avatarStyle: CSS.Properties = {
-	position: 'relative',
 	width: '100%',
 	height: '100%',
 	maxHeight: '300px',
@@ -238,7 +237,9 @@ const avatarStyle: CSS.Properties = {
 	backgroundSize: 'cover',
 	textAlign: 'center',
 	borderRadius: "50%",
-	flexShrink: 0
+   flexShrink: 0,
+   border: '1px solid #707070',
+   boxShadow: 'none',
 }
 
 const editImageStyle: CSS.Properties = {
@@ -252,7 +253,15 @@ const editImageStyle: CSS.Properties = {
 
 const labelStyle: CSS.Properties = {
 	cursor: 'pointer',
-	padding: '10px',
+   padding: '10px',
+   textTransform: 'none',
+}
+const saveButtonStyle: CSS.Properties = {
+	cursor: 'pointer',
+   padding: '10px',
+   textTransform: 'none',
+   position: 'relative',
+   left: '100%'
 }
 const hiddenStyle: CSS.Properties = {
 	visibility: 'hidden',
@@ -265,27 +274,33 @@ const hiddenStyle: CSS.Properties = {
 
 const svgStyle: CSS.Properties = {
 	height: "200px",
-	stroke: "#707070",
+   stroke: "#ACACAC",
+   backgroundColor: '#F7F7F7',
 	bottom: '-15%',
 	right: '0%'
 }
 
+const inputListStyles: CSS.Properties = {
+   position: 'relative',
+   right: '16px',
+   width: '360px'
+}
+
 const textAreaStyle: CSS.Properties = {
-	textAlign: "left",
-	marginLeft: "10px",
+   textAlign: "left",
+   marginLeft: '10px',
 	border: "1px solid black",
-	paddingLeft: "5px"
 }
 
 const addressStyle: CSS.Properties = {
 	overflow: "ellipsis",
 	maxWidth: "90vw",
-	cursor: "pointer"
+   cursor: "pointer",
+   fontWeight: 'bold'
 }
 
 const svgCircle = () => {
 	return <svg style={{ ...editImageStyle, ...svgStyle }} viewBox="0 0 100 100">
-		<circle cx="50" cy="50" r="45" fill="none" strokeWidth="1"></circle>
 		<line x1="32.5" y1="50" x2="67.5" y2="50" strokeWidth="5"></line>
 		<line x1="50" y1="32.5" x2="50" y2="67.5" strokeWidth="5"></line>
 	</svg>
