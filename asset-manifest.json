@@ -15,15 +15,15 @@
     "static/js/6.8ccd84cd.chunk.js": "/arweave-id-v2-ui/static/js/6.8ccd84cd.chunk.js",
     "static/js/6.8ccd84cd.chunk.js.map": "/arweave-id-v2-ui/static/js/6.8ccd84cd.chunk.js.map",
     "main.css": "/arweave-id-v2-ui/static/css/main.12b0eddc.chunk.css",
-    "main.js": "/arweave-id-v2-ui/static/js/main.3c090c02.chunk.js",
-    "main.js.map": "/arweave-id-v2-ui/static/js/main.3c090c02.chunk.js.map",
+    "main.js": "/arweave-id-v2-ui/static/js/main.eabae396.chunk.js",
+    "main.js.map": "/arweave-id-v2-ui/static/js/main.eabae396.chunk.js.map",
     "polyfills-css-shim.js": "/arweave-id-v2-ui/static/js/polyfills-css-shim.b23bc348.chunk.js",
     "polyfills-css-shim.js.map": "/arweave-id-v2-ui/static/js/polyfills-css-shim.b23bc348.chunk.js.map",
     "runtime-main.js": "/arweave-id-v2-ui/static/js/runtime-main.e92aeb36.js",
     "runtime-main.js.map": "/arweave-id-v2-ui/static/js/runtime-main.e92aeb36.js.map",
     "static/css/10.bf8e508d.chunk.css": "/arweave-id-v2-ui/static/css/10.bf8e508d.chunk.css",
-    "static/js/10.e58ed2b8.chunk.js": "/arweave-id-v2-ui/static/js/10.e58ed2b8.chunk.js",
-    "static/js/10.e58ed2b8.chunk.js.map": "/arweave-id-v2-ui/static/js/10.e58ed2b8.chunk.js.map",
+    "static/js/10.5061e4f1.chunk.js": "/arweave-id-v2-ui/static/js/10.5061e4f1.chunk.js",
+    "static/js/10.5061e4f1.chunk.js.map": "/arweave-id-v2-ui/static/js/10.5061e4f1.chunk.js.map",
     "static/js/11.539e47ba.chunk.js": "/arweave-id-v2-ui/static/js/11.539e47ba.chunk.js",
     "static/js/11.539e47ba.chunk.js.map": "/arweave-id-v2-ui/static/js/11.539e47ba.chunk.js.map",
     "static/js/12.174d13e7.chunk.js": "/arweave-id-v2-ui/static/js/12.174d13e7.chunk.js",
@@ -189,11 +189,11 @@
     "static/js/92.9df26ce8.chunk.js": "/arweave-id-v2-ui/static/js/92.9df26ce8.chunk.js",
     "static/js/92.9df26ce8.chunk.js.map": "/arweave-id-v2-ui/static/js/92.9df26ce8.chunk.js.map",
     "index.html": "/arweave-id-v2-ui/index.html",
-    "precache-manifest.5cd3edaa0d128305faddee00f5206218.js": "/arweave-id-v2-ui/precache-manifest.5cd3edaa0d128305faddee00f5206218.js",
+    "precache-manifest.60f8f2c44bb42330efc3d49b2b672873.js": "/arweave-id-v2-ui/precache-manifest.60f8f2c44bb42330efc3d49b2b672873.js",
     "service-worker.js": "/arweave-id-v2-ui/service-worker.js",
     "static/css/10.bf8e508d.chunk.css.map": "/arweave-id-v2-ui/static/css/10.bf8e508d.chunk.css.map",
     "static/css/main.12b0eddc.chunk.css.map": "/arweave-id-v2-ui/static/css/main.12b0eddc.chunk.css.map",
-    "static/js/10.e58ed2b8.chunk.js.LICENSE.txt": "/arweave-id-v2-ui/static/js/10.e58ed2b8.chunk.js.LICENSE.txt",
+    "static/js/10.5061e4f1.chunk.js.LICENSE.txt": "/arweave-id-v2-ui/static/js/10.5061e4f1.chunk.js.LICENSE.txt",
     "static/js/28.0b952655.chunk.js.LICENSE.txt": "/arweave-id-v2-ui/static/js/28.0b952655.chunk.js.LICENSE.txt",
     "static/js/89.8d088d62.chunk.js.LICENSE.txt": "/arweave-id-v2-ui/static/js/89.8d088d62.chunk.js.LICENSE.txt",
     "static/js/92.9df26ce8.chunk.js.LICENSE.txt": "/arweave-id-v2-ui/static/js/92.9df26ce8.chunk.js.LICENSE.txt"
@@ -201,8 +201,8 @@
   "entrypoints": [
     "static/js/runtime-main.e92aeb36.js",
     "static/css/10.bf8e508d.chunk.css",
-    "static/js/10.e58ed2b8.chunk.js",
+    "static/js/10.5061e4f1.chunk.js",
     "static/css/main.12b0eddc.chunk.css",
-    "static/js/main.3c090c02.chunk.js"
+    "static/js/main.eabae396.chunk.js"
   ]
 }
