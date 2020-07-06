@@ -120,26 +120,26 @@ const App = () => {
 			<Header />
 			<IonContent >
 				<IonGrid style={gridStyle}>
-					<IonCardContent style={{padding: '4px'}}>
-						<IonRow style={{flexDirection:'row'}}>
-						<Popover
+					<IonCardContent style={{ padding: '4px' }}>
+						<IonRow style={{ flexDirection: 'row' }}>
+							<Popover
 								isOpen={copiedModal}
 								position={'bottom'}
-								content={<IonCard color='primary' style={{ padding: '5px', borderRadius:'15px'}}>Copied</IonCard>}
+								content={<IonCard color='primary' style={{ padding: '5px', borderRadius: '15px' }}>Copied</IonCard>}
 							>
-							<IonItem onClick={() => {
-								navigator.clipboard.writeText(address)
-								.then(()=>{
-									setCopied(true)
-									setTimeout(() => setCopied(false),1500)
-								})
-							}
-								}lines="none">
-								<IonLabel style={addressStyle}>
-									Wallet: {address.substr(0,4) + '...' + address.substr( (address.length-4))}
-								</IonLabel>
-							</IonItem></Popover>
-							<IonButton size='small' shape="round" color='secondary' fill="outline" onClick={() => openFileInput(walletFileInput)} style={{marginTop: '12px'}}>
+								<IonItem onClick={() => {
+									navigator.clipboard.writeText(address)
+										.then(() => {
+											setCopied(true)
+											setTimeout(() => setCopied(false), 1500)
+										})
+								}
+								} lines="none">
+									<IonLabel style={addressStyle}>
+										Wallet: {address.substr(0, 4) + '...' + address.substr((address.length - 4))}
+									</IonLabel>
+								</IonItem></Popover>
+							<IonButton size='small' shape="round" color='secondary' fill="outline" onClick={() => openFileInput(walletFileInput)} style={{ marginTop: '12px' }}>
 								<label style={labelStyle} title='Load Your Arweave Wallet'>
 									import
 							</label>
@@ -223,8 +223,8 @@ const gridStyle: CSS.Properties = {
 	display: 'flex',
 	flexDirection: 'column',
 	justifyContent: 'start',
-   alignItems: 'center',
-   backgroundColor: '#F7F7F7'
+	alignItems: 'center',
+	backgroundColor: '#F7F7F7'
 }
 const avatarStyle: CSS.Properties = {
 	width: '100%',
@@ -237,9 +237,9 @@ const avatarStyle: CSS.Properties = {
 	backgroundSize: 'cover',
 	textAlign: 'center',
 	borderRadius: "50%",
-   flexShrink: 0,
-   border: '1px solid #707070',
-   boxShadow: 'none',
+	flexShrink: 0,
+	border: '1px solid #707070',
+	boxShadow: 'none',
 }
 
 const editImageStyle: CSS.Properties = {
@@ -253,15 +253,15 @@ const editImageStyle: CSS.Properties = {
 
 const labelStyle: CSS.Properties = {
 	cursor: 'pointer',
-   padding: '10px',
-   textTransform: 'none',
+	padding: '10px',
+	textTransform: 'none',
 }
 const saveButtonStyle: CSS.Properties = {
 	cursor: 'pointer',
-   padding: '10px',
-   textTransform: 'none',
-   position: 'relative',
-   left: '100%'
+	padding: '10px',
+	textTransform: 'none',
+	position: 'relative',
+	left: '100%'
 }
 const hiddenStyle: CSS.Properties = {
 	visibility: 'hidden',
@@ -274,29 +274,29 @@ const hiddenStyle: CSS.Properties = {
 
 const svgStyle: CSS.Properties = {
 	height: "200px",
-   stroke: "#ACACAC",
-   backgroundColor: '#F7F7F7',
+	stroke: "#ACACAC",
+	backgroundColor: '#F7F7F7',
 	bottom: '-15%',
 	right: '0%'
 }
 
 const inputListStyles: CSS.Properties = {
-   position: 'relative',
-   right: '16px',
-   width: '360px'
+	position: 'relative',
+	right: '16px',
+	width: '360px'
 }
 
 const textAreaStyle: CSS.Properties = {
-   textAlign: "left",
-   marginLeft: '10px',
+	textAlign: "left",
+	marginLeft: '10px',
 	border: "1px solid black",
 }
 
 const addressStyle: CSS.Properties = {
 	overflow: "ellipsis",
 	maxWidth: "90vw",
-   cursor: "pointer",
-   fontWeight: 'bold'
+	cursor: "pointer",
+	fontWeight: 'bold'
 }
 
 const svgCircle = () => {
