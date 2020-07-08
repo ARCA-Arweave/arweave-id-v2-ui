@@ -204,6 +204,7 @@ const App = () => {
 							isOpen={successModal}
 							position={'bottom'}
 							content={successModalContent}
+							onClickOutside={()=> setSuccess(false)}
 						>
 							<IonButton onClick={onUpdateIdentity} disabled={disableUpdateButton || name === ''} shape="round" style={saveButtonStyle} >
 								save
