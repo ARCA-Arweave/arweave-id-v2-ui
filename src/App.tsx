@@ -109,8 +109,8 @@ const App = () => {
 
 		if (res?.statusCode === 202) {
 			setModalContent(<IonCard color="primary" style={{ padding: '10px', borderRadius: "15px", textAlign: "center", width: "200px" }}>
-				<label>ArweaveID submitted successfully. <br /> See transaction
-		<a href={"https://viewblock.io/arweave/tx/" + res.txid} target="blank"> here</a></label></IonCard>)
+				<label>ArweaveID submitted successfully. <br /> See transaction &nbsp
+		<a href={"https://viewblock.io/arweave/tx/" + res.txid} target="blank">here</a></label></IonCard>)
 		}
 		else {
 			setModalContent(<IonCard color="danger" style={{ padding: '10px', borderRadius: "15px", textAlign: "center", width: "200px" }}>
