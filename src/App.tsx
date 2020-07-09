@@ -41,10 +41,13 @@ const App = () => {
 		if ((retrievedID?.name === name) && (retrievedID?.text === text) && (retrievedID?.url === url) && (retrievedID?.avatarDataUri === avatarDataUri)) {
 			setDisableUpdateButton(true)
 		}
+		else if ((retrievedID?.name !== name) && (unavailableNames?.includes(name))) {
+			setDisableUpdateButton(true)
+		}
 		else {
 			setDisableUpdateButton(false)
 		}
-	}, [name, text, url, avatarDataUri, retrievedID, disableUpdateButton]);
+	}, [name, text, url, avatarDataUri, retrievedID, disableUpdateButton, unavailableNames]);
 
 	const onLoadIdentity = async (ev: React.ChangeEvent<HTMLInputElement>) => {
 		setName('')
@@ -60,9 +63,7 @@ const App = () => {
 			console.log('received data')
 			console.log(data.arweaveId)
 			setID(arid);
-			setDisableUpdateButton(false)
 		} catch (err) {
-			setDisableUpdateButton(true)
 			setAddress('Error: Unable to load wallet')
 			console.log('no data received')
 		}
@@ -81,11 +82,9 @@ const App = () => {
 		setName(ev.detail.value!.trim())
 		if ((retrievedID?.name !== ev.detail.value) && (unavailableNames?.includes(ev.detail.value!))) {
 			setShowModal(true)
-			setDisableUpdateButton(true)
 		}
 		else {
 			setShowModal(false);
-			setDisableUpdateButton(false);
 		}
 	}
 
@@ -101,6 +100,8 @@ const App = () => {
 		setModalContent(<IonCard style={{ padding: '10px', borderRadius: "15px", textAlign: "center", width: "200px" }}>
 			<IonSpinner name="dots" /></IonCard>)
 		let updated: ArweaveId = { name: name!, url: url, text: text }
+		let oldID = retrievedID
+		setID(updated)
 		if (avatarDataUri !== undefined) {
 			updated.avatarDataUri = avatarDataUri
 		}
@@ -111,8 +112,11 @@ const App = () => {
 				<label>ArweaveID submitted successfully. <br /> See transaction
 		<a href={"https://viewblock.io/arweave/tx/" + res.txid} target="blank"> here</a></label></IonCard>)
 		}
-		else setModalContent(<IonCard color="danger" style={{ padding: '10px', borderRadius: "15px", textAlign: "center", width: "200px" }}>
-			<label>Error: {res?.statusMessage}</label></IonCard>)
+		else {
+			setModalContent(<IonCard color="danger" style={{ padding: '10px', borderRadius: "15px", textAlign: "center", width: "200px" }}>
+			<label>Error: {res?.statusMessage}</label></IonCard>);
+			setID(oldID)
+		}
 	}
 
 	return (
