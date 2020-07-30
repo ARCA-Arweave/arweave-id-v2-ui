@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { IonContent, IonApp, IonCard, IonButton, IonGrid, IonItem, IonInput, IonList, IonCardContent, IonLabel, IonRow, IonTextarea, IonSpinner } from '@ionic/react'
 import '@ionic/react/css/core.css'
 import * as CSS from 'csstype'
-import { loadIdentity, IIdData, setIdentity, getUnavailableNames } from './providers/arweave.provider'
+import { loadIdentity, IIdData, setIdentity, checkAvailable } from './providers/arweave.provider'
 import { mdiWeb, mdiTagFaces, mdiFormatAlignRight } from '@mdi/js'
 import { Icon } from '@mdi/react';
 import Header from './components/Header'
@@ -20,34 +20,28 @@ const App = () => {
 	const [text, setText] = useState<string>('');
 	const [retrievedID, setID] = useState<ArweaveId>();
 	const [avatarDataUri, setAvatarDataUri] = useState<string>()
-	const [showModal, setShowModal] = useState<boolean>(false)
-	const [unavailableNames, setUnavailableNames] = useState<string[]>()
+	const [showInvalidName, setShowInvalidName] = useState<boolean>(false)
 	const [successModal, setSuccess] = useState<boolean>(false);
 	const [successModalContent, setModalContent] = useState<any>()
 	const [copiedModal, setCopied] = useState<boolean>(false);
 	const walletFileInput = useRef<HTMLInputElement>(null)
 	const avatarFileInput = useRef<HTMLInputElement>(null)
 
-	useEffect(() => {
-		const getNames = async () => {
-			const names = await getUnavailableNames();
-			setUnavailableNames(names);
-			console.log(names);
-		}
-		getNames();
-	}, [])
 
 	useEffect(() => {
-		if ((retrievedID?.name === name) && (retrievedID?.text === text) && (retrievedID?.url === url) && (retrievedID?.avatarDataUri === avatarDataUri)) {
-			setDisableUpdateButton(true)
+		const monitor = async () => {
+			if ((retrievedID?.name === name) && (retrievedID?.text === text) && (retrievedID?.url === url) && (retrievedID?.avatarDataUri === avatarDataUri)) {
+				setDisableUpdateButton(true)
+			}
+			else if ((retrievedID?.name !== name) && (await checkAvailable(name))) { 
+				setDisableUpdateButton(true)
+			}
+			else {
+				setDisableUpdateButton(false)
+			}
 		}
-		else if ((retrievedID?.name !== name) && (unavailableNames?.includes(name))) {
-			setDisableUpdateButton(true)
-		}
-		else {
-			setDisableUpdateButton(false)
-		}
-	}, [name, text, url, avatarDataUri, retrievedID, disableUpdateButton, unavailableNames]);
+		monitor()
+	}, [name, text, url, avatarDataUri, retrievedID, disableUpdateButton]);
 
 	const onLoadIdentity = async (ev: React.ChangeEvent<HTMLInputElement>) => {
 		setName('')
@@ -78,13 +72,13 @@ const App = () => {
 		}
 	}
 
-	const checkName = (ev: any) => {
+	const checkName = async (ev: any) => {
 		setName(ev.detail.value!.trim())
-		if ((retrievedID?.name !== ev.detail.value) && (unavailableNames?.includes(ev.detail.value!))) {
-			setShowModal(true)
+		if ((retrievedID?.name !== ev.detail.value) && (await checkAvailable(ev.detail.value!))) {
+			setShowInvalidName(true)
 		}
 		else {
-			setShowModal(false);
+			setShowInvalidName(false);
 		}
 	}
 
@@ -173,7 +167,7 @@ const App = () => {
 						<IonItem lines="none" style={{ border: '0px solid white' }}>
 							<Icon path={mdiTagFaces} size={1} />
 							<Popover
-								isOpen={showModal}
+								isOpen={showInvalidName}
 								position={'bottom'}
 								content={<IonCard color='danger' style={{ padding: '10px' }}>Name Not Available</IonCard>}
 							>
@@ -182,7 +176,7 @@ const App = () => {
 									placeholder="What's your name?"
 									value={name}
 									onIonChange={ev => checkName(ev)}
-									onFocus={() => setShowModal(false)}
+									onFocus={() => setShowInvalidName(false)}
 									style={textAreaStyle}
 								/>
 							</Popover>

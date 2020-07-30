@@ -1,5 +1,5 @@
 import Arweave from 'arweave/web'
-import { get, ArweaveId, set } from 'arweave-id'
+import { get, ArweaveId, set, check } from 'arweave-id'
 import { JWKInterface } from 'arweave/web/lib/wallet'
 
 
@@ -37,7 +37,6 @@ export const loadIdentity = async (ev: React.ChangeEvent<HTMLInputElement>): Pro
 	})
 }
 
-
 export const setIdentity = async (arId: ArweaveId) => {
 	if (!jwk) {
 		alert('need to load jwk first')
@@ -51,21 +50,6 @@ export const setIdentity = async (arId: ArweaveId) => {
 	return res
 }
 
-export const getUnavailableNames = async (): Promise<Array<string>> => {
-	let query = `query {
-		transactions(tags: [{name: "App-Name", value: "arweave-id"},{name: "App-Version", value:"0.0.2"}]) {
-		  id
-		  tags{name value}
-		}
-	  }`
-	let allNamesQuery = Object.assign(await arweave.arql({query: query}));
-	let nameTxns = allNamesQuery.data.transactions as Array<object>;
-	//@ts-ignore
-	let names = nameTxns.map(txn => {
-		//@ts-ignore
-		let name = txn.tags.filter(tag => tag['name'] === 'Name');
-		return name[0]['value'];
-	})
-
-	return names;
+export const checkAvailable = async (name:string) => {
+	return await check(name, arweave)
 }
