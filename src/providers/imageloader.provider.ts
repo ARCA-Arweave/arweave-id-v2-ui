@@ -1,8 +1,6 @@
 
 
 
-
-
 export const loadImage = async (ev: React.ChangeEvent<HTMLInputElement>):Promise<string> => {
 	return new Promise((resolve, reject) => {
 		let file = ev.target.files![0]

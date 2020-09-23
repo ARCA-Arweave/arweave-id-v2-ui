@@ -1,4 +1,4 @@
-import Arweave from 'arweave/web'
+import Arweave from 'arweave'
 import { get, ArweaveId, set, check } from 'arweave-id'
 import { JWKInterface } from 'arweave/web/lib/wallet'
 
