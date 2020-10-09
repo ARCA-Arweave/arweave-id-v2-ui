@@ -3,8 +3,8 @@
     "static/js/0.517f373d.chunk.js": "/arweave-id-v2-ui/static/js/0.517f373d.chunk.js",
     "static/js/0.517f373d.chunk.js.map": "/arweave-id-v2-ui/static/js/0.517f373d.chunk.js.map",
     "main.css": "/arweave-id-v2-ui/static/css/main.12b0eddc.chunk.css",
-    "main.js": "/arweave-id-v2-ui/static/js/main.dd17bde0.chunk.js",
-    "main.js.map": "/arweave-id-v2-ui/static/js/main.dd17bde0.chunk.js.map",
+    "main.js": "/arweave-id-v2-ui/static/js/main.69853ffd.chunk.js",
+    "main.js.map": "/arweave-id-v2-ui/static/js/main.69853ffd.chunk.js.map",
     "polyfills-css-shim.js": "/arweave-id-v2-ui/static/js/polyfills-css-shim.3460f917.chunk.js",
     "polyfills-css-shim.js.map": "/arweave-id-v2-ui/static/js/polyfills-css-shim.3460f917.chunk.js.map",
     "runtime-main.js": "/arweave-id-v2-ui/static/js/runtime-main.1677cf2b.js",
@@ -121,7 +121,7 @@
     "static/js/58.ddee117e.chunk.js": "/arweave-id-v2-ui/static/js/58.ddee117e.chunk.js",
     "static/js/58.ddee117e.chunk.js.map": "/arweave-id-v2-ui/static/js/58.ddee117e.chunk.js.map",
     "index.html": "/arweave-id-v2-ui/index.html",
-    "precache-manifest.e2769e97efc77caca8d1cab3b443ec17.js": "/arweave-id-v2-ui/precache-manifest.e2769e97efc77caca8d1cab3b443ec17.js",
+    "precache-manifest.19418aade9257bd120cd784420e4abbc.js": "/arweave-id-v2-ui/precache-manifest.19418aade9257bd120cd784420e4abbc.js",
     "service-worker.js": "/arweave-id-v2-ui/service-worker.js",
     "static/css/4.bf8e508d.chunk.css.map": "/arweave-id-v2-ui/static/css/4.bf8e508d.chunk.css.map",
     "static/css/main.12b0eddc.chunk.css.map": "/arweave-id-v2-ui/static/css/main.12b0eddc.chunk.css.map",
@@ -136,6 +136,6 @@
     "static/css/4.bf8e508d.chunk.css",
     "static/js/4.a396f5ed.chunk.js",
     "static/css/main.12b0eddc.chunk.css",
-    "static/js/main.dd17bde0.chunk.js"
+    "static/js/main.69853ffd.chunk.js"
   ]
 }
