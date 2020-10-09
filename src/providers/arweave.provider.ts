@@ -23,12 +23,17 @@ export const loadIdentity = async (ev: React.ChangeEvent<HTMLInputElement>): Pro
 		fr.onload = async () => {
 			try {
 				jwk = JSON.parse((fr.result as string))
-
-				let address = await arweave.wallets.jwkToAddress(jwk)
+			} catch(e){
+				console.log('file reading error')
+				reject()
+			}
+			let address = await arweave.wallets.jwkToAddress(jwk)
+			try{
 				let arweaveId = await get(address, arweave)
 				console.log(arweaveId);
 				resolve({ address, arweaveId })
 			} catch (error) {
+				console.log('ArweaveId get error')
 				reject()
 			}
 		}
