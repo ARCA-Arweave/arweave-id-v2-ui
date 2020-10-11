@@ -8,11 +8,15 @@ import { Icon } from '@mdi/react';
 import Header from './components/Header'
 import Footer from './components/Footer'
 import { loadImage } from './providers/imageloader.provider'
-import { ArweaveId, getIdenticon } from 'arweave-id'
+import { ArweaveId, getIdenticon, get, set, check } from 'arweave-id'
 import Popover from 'react-tiny-popover'
-
+import Arweave from 'arweave'
 const App = () => {
 
+	//@ts-ignore
+	window.arweave = Arweave
+	//@ts-ignore
+	window.arId = { getIdenticon, get, set, check } 
 	const [disableUpdateButton, setDisableUpdateButton] = useState(true)
 	const [address, setAddress] = useState('xxxxxxxxxxx')
 	const [name, setName] = useState<string>('');
